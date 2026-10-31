@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="css/disposicion.css">
     <link rel="stylesheet" href="css/responsivo.css">
 </head>
+
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true" id="iconos-sprite">
         <symbol id="icono-diente" viewBox="0 0 24 24">
-            <path d="M7.5 3C5 3 3.5 5 3.5 7.5C0 2 .8 3.4 1.4 8 .7 1.9.6 4.5 1.6 7.5.4 1.2 1.4 1.5 2 .4.8-1.5 1-4 2.5-4s1.7 2.5 2.5 4c.6 1.1 1.6.8 2-.4 1-3 .9-5.6 1.6-7.5.6-1.6 1.4-3 1.4-5C20.5 5 19 3 16.5 3c-1.7 0-2.6.8-4.500.8S9.200 3 7.500 3z"/>
+            <path d="M7.5 3C5 3 3.5 5 3.5 7.5c0 2 .8 3.4 1.4 5 .7 1.9.6 4.5 1.6 7.5.4 1.2 1.4 1.5 2 .4.8-1.5 1-4 2.5-4s1.7 2.5 2.5 4c.6 1.1 1.6.8 2-.4 1-3 .9-5.6 1.6-7.5.6-1.6 1.4-3 1.4-5C20.5 5 19 3 16.5 3c-1.7 0-2.6.8-4.5.8S9.2 3 7.5 3z"/>
         </symbol>
         <symbol id="icono-panel" viewBox="0 0 24 24">
             <rect x="3" y="3" width="7" height="9" rx="1"/>
@@ -23,20 +24,17 @@
         </symbol>
         <symbol id="icono-pacientes" viewBox="0 0 24 24">
             <circle cx="9" cy="8" r="3.5"/>
-            <path d="M2.500 20c0-3.500 2.900-6 6.500-6s6.500 2.500 6.500 6"/>
-            <path d="M16 4.500a3.500 3.500 0 0 1 0 7M18 14.300c2 .8 3.500 2.700 3.500 5.700"/>
+            <path d="M2.5 20c0-3.5 2.9-6 6.5-6s6.5 2.5 6.5 6"/>
+            <path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.3c2 .8 3.5 2.7 3.5 5.7"/>
         </symbol>
-        <symbol id="icono-citas" viewBox="0 0 24 24">
-            <rect x="3" y="5" width="18" height="16" rx="2"/>
-            <path d="M3 10h18M8 3v4M16 3v4"/>
-        </symbol>
+        <symbol id="icono-citas" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
         <symbol id="icono-atencion" viewBox="0 0 24 24">
             <rect x="5" y="4" width="14" height="17" rx="2"/>
             <path d="M9 4V3h6v1M9 12l2 2 4-4"/>
         </symbol>
         <symbol id="icono-pagos" viewBox="0 0 24 24">
-            <rect x="2.500" y="5" width="19" height="14" rx="2"/>
-            <path d="M2.500 10h19M6.500 15h4"/>
+            <rect x="2.5" y="5" width="19" height="14" rx="2"/>
+            <path d="M2.5 10h19M6.5 15h4"/>
         </symbol>
         <symbol id="icono-salir" viewBox="0 0 24 24">
             <path d="M9 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M16 8l4 4-4 4M20 12H9"/>
@@ -46,24 +44,24 @@
         </symbol>
         <symbol id="icono-buscar" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="7"/>
-            <path d="M20 20l-3.500-3.500"/>
+            <path d="M20 20l-3.5-3.5"/>
         </symbol>
         <symbol id="icono-guardar" viewBox="0 0 24 24">
-            <path d="M5 12.500l4.500 4.500L19 7.500"/>
+            <path d="M5 12.5l4.5 4.5L19 7.5"/>
         </symbol>
         <symbol id="icono-mas" viewBox="0 0 24 24">
             <path d="M12 5v14M5 12h14"/>
         </symbol>
         <symbol id="icono-ver" viewBox="0 0 24 24">
-            <path d="M2 12s3.500-7 10-7 10 7 10 7-3.500 7-10 7S2 12 2 12z"/>
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
             <circle cx="12" cy="12" r="3"/>
         </symbol>
         <symbol id="icono-confirmar" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="9"/>
-            <path d="M8 12.500l3 3 5-6"/>
+            <path d="M8 12.5l3 3 5-6"/>
         </symbol>
         <symbol id="icono-reprogramar" viewBox="0 0 24 24">
-            <path d="M20 12a8 8 0 1 1-2.500-5.800M20 4v4h-4"/>
+            <path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v4h-4"/>
         </symbol>
         <symbol id="icono-cancelar" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="9"/>
@@ -71,29 +69,150 @@
         </symbol>
         <symbol id="icono-dinero" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="9"/>
-            <path d="M12 7v10M9.500 9.500c0-1 1-1.800 2.500-1.800s2.500.8 2.500 1.800-1 1.600-2.500 1.900-2.500.9-2.500 1.900 1 1.800 2.500 1.800 2.500-.8 2.500-1.800"/>
+            <path d="M12 7v10M9.5 9.5c0-1 1-1.8 2.5-1.8s2.5.8 2.5 1.8-1 1.6-2.5 1.9-2.5.9-2.5 1.9 1 1.8 2.5 1.8 2.5-.8 2.5-1.8"/>
+        </symbol>
+        <symbol id="icono-editar" viewBox="0 0 24 24">
+            <path d="M4 20h4L19 9l-4-4L4 16v4z"/>
+            <path d="M13.5 6.5l4 4"/>
         </symbol>
     </svg>
 
     <div class="aplicacion" id="aplicacion">
+
         <aside class="barra-lateral" id="barra-lateral" aria-label="Menú principal">
             <div class="marca" id="marca">
-                <svg class="icono " aria-hidden="true">
+                <svg class="icono" aria-hidden="True">
                     <use href="#icono-diente"></use>
                 </svg>
-                <span class="marca-texto">Consultorio NADINNE<span class="marca-subtitulo">Odontología</span></span>
+                <span class="marca-texto">Consultorio NADINNE<span class="marca-susbtitulo">Odontología</span></span>
             </div>
 
-            <ul class="menu" id="menu-lateral">
-                <li><a class="menu-enlace activo" aria-current="page" id="menu-panel" href="panel_principal.html" title="Panel principal"><svg class="icono " aria-hidden="true"><use href="#icono-panel"></use></svg></a></li>
+            <nav class="menu-contenedor" id="menu-lateral">
+                <p class="menu-grupo">Gestión</p>
+                <ul class="menu">
+                    <li><a class="menu-enlace activo" aria-current="page" id="memu-panel" href="panel_principal.html" title="Panel principal">
+                        <svg class="icono" aria-hidden="true">
+                            <use href="#icono-panel"></use>
+                        </svg>
+                        <span class="menu-texto">Panel principal</span></a>
+                    </li>
+                    <li><a class="menu-enlace" id="manu-pacientes" href="pacientes.html" title="Pacientes"><svg class="icono" aria-hidden="true"><use href="#icono-pacientes"></use></svg><span class="menu-texto">Pacientes</span></a>
+                    </li>
+                    <li><a class="menu-enlace" id="menu-citas" href="citas.html" title="Citas"><svg class="icono" aria-hidden="true"><use href="#icono-citas"></use></svg>
+                    <span class="menu-texto">Citas</span></a>
+                    </li>
+                </ul>
+                <p class="menu-grupo">Clínica</p>
+                <ul class="menu">
+                    <li><a class="menu-enlace" id="menu-atencion" href="atencion_paciente.html" title="Atención de paciente"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="menu-texto">Atención de paciente</span></a>
+                    </li>
+                    <li><a class="menu-enlace" id="menu-pagos" href="pagos.html" title="Pagos"><svg class="icono" aria-hidden="true"><use href="#icono-pagos"></use></svg><span class="menu-texto">Pagos</span></a>
+                    </li>
+                </ul>
+            </nav>
 
-                <li><a class="menu-enlace" id="menu-pacientes" href="pacientes.html" title="Pacientes"><svg class="icono " aria-hidden="true"><use href="#icono-pacientes"></use></svg><span class="menu-texto">Pacientes</span></a></li>
+            <div class="perfil" id="perfil-usuario">
+                <span class="avatar" aria-hidden="true">CM</span>
+                <span class="perfil-texto"><strong>Dra. Cynthia Morey</strong><small>Administradora</small></span>
+                <a class="perfil-salir" id="menu-cerrar-sesion" href="inicio_sesion.html" title="Cerrar sesión" aria-label="Cerrar sesión"><svg class="icono" aria-hidden="true"><use href="#icono-salir"></use></svg></a>
+            </div>
+        </aside>
 
-                <li><a class="menu-enlace" id="menu-citas" href="citas.html" title="Citas"><svg class="icono " aria-hidden="true"><use href="#icono-citas"></use></svg><span class="menu-texto">Citas</span></a></li>
+        <div class="fondo-menu" id="fondo-menu"></div>
 
-                <li><a class="menu-enlace" id="menu-atención" href="atencion_paciente.html" title="Atención de paciente"><svg class="icono " aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="menu-texto">Atención de Paciente</span></a></li>
+        <div class="contenido-principal" id="contenido-principal">
+            <header class="barra-superior" id="barra-superior">
+                <button class="boton boton-menu" id="boton-menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="barra-lateral"><svg class="icono" aria-hidden="true"><use href="#icono-menu"></use></svg></button>
+                <span class="migas" id="migas"><span class="migas-raiz">Consultorio NADINNE / </span><strong>Panel principal</strong></span>
+                <span class="fecha-actual numeros" id="fecha-actual">20/10/2026</span>
+            </header>
 
-            </ul>
+            <main class="area-trabajo" id="area-trabajo">
+                <div class="encabezado-pagina" id="encabezado-pagina">
+                    <div><h1 class="titulo-pagina" id="titulo-pagina">Panel principal</h1>
+                        <p class="subtitulo-pagina">Resumen de la jornada del Martes 20 de Octubre del 2026.</p>
+                    </div>
+                    <a class="boton boton-primario" id="boton-nueva-cita-cabecera" href="citas.html"><svg class="icono" aria-hidden="true"><use href="#icono-mas"></use></svg>Registrar Cita</a>
+                </div>
+
+                <section class="rejilla rejilla-resumen" id="resumen-del-dia" aria-label="Resumen del día">
+                    <div class="indicador">
+                        <div class="indicador-cabecera"><span class="indicador-texto">Citas de hoy</span><svg class="icono" aria-hidden="true"><use href="#icono-citas"></use></svg>
+                        </div>
+                        <div class="indicador-numero" id="total-citas-hoy">6</div>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-cabecera"><span class="indicador-texto">Pacientes registrados</span><svg class="icono" aria-hidden="true"><use href="#icono-pacientes"></use></svg></div>
+                        <div class="indicador-numero" id="total-pacientes">48</div>
+                    </div>
+
+                    <div class="indicador">
+                        <div class="indicador-cabecera"><span class="indicador-texto">Tratamientos en curso</span><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg>
+                        </div>
+                        <div class="indicador-numero" id="total-tratamientos">12</div>
+                    </div>
+
+                    <div class="indicador indicador-alerta">
+                        <div class="indicador-cabecera"><span class="indicador-texto">Saldo pendiente de cobro</span><svg class="icono" aria-hidden="true"><use href="#icono-dinero"></use></svg>
+                        </div>
+                        <div class="indicador-numero" id="total-saldo-pendiente">S/. 3,250.00</div>
+                    </div>
+                </section>
+
+                <section class="tarjeta" id="tarjeta-agenda-del-dia">
+                    <h2 class="tarjeta-titulo">Agenda del día  -  20/10/2026</h2>
+                    <div class="tabla-contenedor">
+                        <table class="tabla tabla-adaptable" id="tabla-agenda-dia">
+                            <thead>
+                                <tr>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Motivo</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="celda-fija" data-etiqueta="Hora">08:00</td>
+                                    <td data-etiqueta="Paciente">María Quispe Ramíres</td>
+                                    <td data-etiqueta="Motivo">Limpieza dental</td>
+                                    <td data-etiqueta="Estado"><span class="insignia insignia-confirmada">Confirmada</span></td>
+                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="celda-fija" data-etiqueta="Hora">09:00</td>
+                                    <td data-etiqueta="Paciente">Luis Pérez Vásquez</td>
+                                    <td data-etiqueta="Motivo">Control de ortodoncia</td>
+                                    <td data-etiqueta="Estado"><span class="insignia insignia-confirmada">Confirmada</span></td>
+                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                </tr>
+                            </tbody>
+
+
+
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+
+
+
+
+
+
+
+            </main>
+
+        </div>
+
     </div>
 </body>
 </html>
