@@ -129,112 +129,197 @@
 
             <main class="area-trabajo" id="area-trabajo">
                 <div class="encabezado-pagina" id="encabezado-pagina">
-                    <div><h1 class="titulo-pagina" id="titulo-pagina">Panel principal</h1>
-                        <p class="subtitulo-pagina">Resumen de la jornada del Martes 20 de Octubre del 2026.</p>
+                    <div><h1 class="titulo-pagina" id="titulo-pagina">Pacientes</h1>
+                        <p class="subtitulo-pagina">Registre pacientes y consulte sus datos de contacto y antecedentes.</p>
                     </div>
-                    <a class="boton boton-primario" id="boton-nueva-cita-cabecera" href="citas.html"><svg class="icono" aria-hidden="true"><use href="#icono-mas"></use></svg>Registrar Cita</a>
                 </div>
 
-                <section class="rejilla rejilla-resumen" id="resumen-del-dia" aria-label="Resumen del día">
-                    <div class="indicador">
-                        <div class="indicador-cabecera"><span class="indicador-texto">Citas de hoy</span><svg class="icono" aria-hidden="true"><use href="#icono-citas"></use></svg>
-                        </div>
-                        <div class="indicador-numero" id="total-citas-hoy">6</div>
-                    </div>
+                <section class="tarjeta" id="tarjeta-registro-paciente">
+                    <h2 class="tarjeta-titulo">Registrar paciente</h2>
+                    <form id="formulario-paciente" method="post" action="#" novalidate>
+                        <div class="rejilla rejilla-formulario">
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-dni">DNI *</label>
+                                <input class="entrada" type="text" id="campo-dni" name="dni" maxlength="8" inputmode="numeric" placeholder="8 dígitos">
+                                <div class="mensaje-campo" id="error-dni"></div>
+                            </div>
 
-                    <div class="indicador">
-                        <div class="indicador-cabecera"><span class="indicador-texto">Pacientes registrados</span><svg class="icono" aria-hidden="true"><use href="#icono-pacientes"></use></svg></div>
-                        <div class="indicador-numero" id="total-pacientes">48</div>
-                    </div>
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-nombres">Nombres *</label>
+                                <input class="entrada" type="text" id="campo-nombres" name="nombres">
+                                <div class="mensaje-campo" id="error-nombres"></div>
+                            </div>
 
-                    <div class="indicador">
-                        <div class="indicador-cabecera"><span class="indicador-texto">Tratamientos en curso</span><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg>
-                        </div>
-                        <div class="indicador-numero" id="total-tratamientos">12</div>
-                    </div>
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-apellidos">Apellidos *</label>
+                                <input class="entrada" type="text" id="campo-apellidos" name="apellidos">
+                            </div>
 
-                    <div class="indicador indicador-alerta">
-                        <div class="indicador-cabecera"><span class="indicador-texto">Saldo pendiente de cobro</span><svg class="icono" aria-hidden="true"><use href="#icono-dinero"></use></svg>
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-fecha-nacimiento">Fecha de Nacimiento *</label>
+                                <input class="entrada" type="date" id="campo-fecha-nacimiento" name="fecha_nacimiento">
+                            </div>
+
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-sexo">Sexo *</label>
+                                <select class="selector" id="campo-sexo" name="sexo"><option>Femenino</option><option>Masculino</option></select>
+                            </div>
+
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-telefono">Teléfono *</label>
+                                <input class="entrada" type="tel" id="campo-telefono" name="telefono" inputmode="tel">
+                                <div class="mensaje-campo" id="error-telefono"></div>
+                            </div>
+
+                            <div class="compo ocupa-dos">
+                                <label class="etiqueta" for="campo-correo">Correo electrónico</label>
+                                <input class="entrada" type="email" id="campo-correo" name="correo">
+                            </div>
+
+                            <div class="campo">
+                                <label class="etiqueta" for="campo-direccion">Dirección</label>
+                                <input class="entrada" type="text" id="campo-direccion" name="direccion">
+                            </div>
+
+                            <div class="campo ocupa-todo">
+                                <label class="etiqueta" for="campo-antecedentes">Antecedentes odontológicos y médicos</label>
+                                <textarea class="area-texto" id="campo-antecedentes" name="antecedentes"></textarea>
+                            </div>
                         </div>
-                        <div class="indicador-numero" id="total-saldo-pendiente">S/. 3,250.00</div>
-                    </div>
+
+                        <div class="grupo-botones acciones-formulario">
+                            <button class="boton boton-primario" type="submit" id="boton-guardar-paciente">
+                                <svg class="icono" aria-hidden="true">
+                                    <use href="#icono-guardar"></use></svg>Guardar paciente
+                            </button>
+                            <button class="boton" type="reset" id="boton-cancelar-paciente">Cancelar</button>
+                        </div>
+                    </form>
                 </section>
 
-                <section class="tarjeta" id="tarjeta-agenda-del-dia">
-                    <h2 class="tarjeta-titulo">Agenda del día  -  20/10/2026</h2>
+                <!--Listado de Pacientes: buscador y tabla-->
+                <section class="tarjeta" id="tarjeta-listado-pacientes">
+                    <h2 class="tarjeta-titulo">Listado de pacientes</h2>
+                    <!--Buscador: mientras se escribe, filtrarTabla() muestra solo las filas que coinciden-->
+                    <div class="entrada-con-icono buscador">
+                        <svg class="icono" aria-hidden="true">
+                            <use href="#icono-buscar"></use>
+                        </svg>
+                        <input class="entrada" type="search" id="buscador-pacientes" placeholder="Buscar por DNI o Apellidos" aria-label="Buscar paciente" oninput="filtrarTabla('buscador-pacientes', 'tabla-pacientes', 'sin-resultados-pacientes')">
+                    </div>
+
                     <div class="tabla-contenedor">
-                        <table class="tabla tabla-adaptable" id="tabla-agenda-dia">
+                        <!--Tabla de pacientes. La columna correo lleva col-secundaria: se oculta en pantallas medianas-->
+                        <table class="tabla tabla-adaptable" id="tabla-pacientes">
                             <thead>
                                 <tr>
-                                    <th>Hora</th>
-                                    <th>Paciente</th>
-                                    <th>Motivo</th>
-                                    <th>Estado</th>
-                                    <th>Acción</th>
-                                </tr>
+                                    <th>DNI</th>
+                                    <th>Apellidos y Nombres</th>
+                                    <th>Teléfono</th>
+                                    <th class="col-secundaria">Correo</th>
+                                    <th>Acciones</th>
+                                </tr>                                
                             </thead>
 
                             <tbody>
                                 <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">08:00</td>
-                                    <td data-etiqueta="Paciente">María Quispe Ramíres</td>
-                                    <td data-etiqueta="Motivo">Limpieza dental</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-confirmada">Confirmada</span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                    <td class="celda-fija" data-etiqueta="DNI">72145896</td>
+                                    <td data-etiqueta="Paciente">Quispe Ramírez, María</td>
+                                    <td data-etiqueta="Teléfono">987654321</td>
+                                    <td class="col-secundaria" data-etiqueta="Correo">maria.quispe@correo.com</td>
+                                    <td data-etiqueta="Acciones">
+                                        <div class="tabla-acciones">
+                                            <a class="boton boton-pequeno" aria-label="Ver ficha" title="Ver ficha" href="atencion_paciente.html">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-ver"></use>
+                                                </svg>
+                                                <span class="boton-texto">Ver ficha</span>
+                                            </a>
+                                            <a class="boton boton-pequeno" href="#" aria-label="Editar" title="Editar">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-editar"></use>
+                                                </svg>
+                                                <span class="boton-texto">Editar</span>
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">09:00</td>
-                                    <td data-etiqueta="Paciente">Luis Pérez Vásquez</td>
-                                    <td data-etiqueta="Motivo">Control de ortodoncia</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-confirmada">Confirmada</span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                    <td class="celda-fija" data-etiqueta="DNI">45128796</td>
+                                    <td data-etiqueta="Paciente">Pérez Vásquez, Luis</td>
+                                    <td data-etiqueta="Teléfobo">965123478</td>
+                                    <td class="col-secundaria" data-etiqueta="Correo">luis.perez@correo.com</td>
+                                    <td data-etiqueta="Acciones">
+                                        <div class="tabla-acciones">
+                                            <a class="boton boton-pequeno" aria-label="Ver ficha" title="Ver ficha" href="atencion_paciente.html">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-ver"></use>
+                                                </svg>
+                                                <span class="boton-texto">Ver ficha</span>
+                                            </a>
+                                            <a class="boton boton-pequeno" href="#" aria-label="Editar" title="Editar">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-editar"></use>
+                                                </svg>
+                                                <span class="boton-texto">Editar</span>
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">10:30</td>
-                                    <td data-etiqueta="Paciente">Rosa Díaz Tuanama</td>
-                                    <td data-etiqueta="Motivo">Consulta por dolor molar</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-programada">Programada</span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                    <td class="celda-fija" data-etiqueta="DNI">70889123</td>
+                                    <td data-etiqueta="Paciente">Días Tuanama, Rosa</td>
+                                    <td data-etiqueta="Teléfono">912345678</td>
+                                    <td class="col-secundaria" data-etiqueta="Correo">rosa.dias@correo.com</td>
+                                    <td data-etiqueta="Acciones">
+                                        <div class="tabla-acciones">
+                                            <a class="boton boton-pequeno" aria-level="Ver ficha" title="Ver ficha" href="atencion_paciente.html">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-ver"></use>
+                                                </svg>
+                                                <span class="boton-texto">Ver ficha</span>
+                                            </a>
+                                            <a class="boton boton-pequeno" href="#" aria-label="Editar" title="Editar">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-editar"></use>
+                                                </svg>
+                                                <span class="boton-texto">Editar</span>
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
 
                                 <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">12:00</td>
-                                    <td data-etiqueta="Paciente">Carlos Ríos Flores</td>
-                                    <td data-etiqueta="Motivo">Extracción</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-programada">Programada</span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use> </svg><span class="boton-texto">Atender</span> </a></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">15:00</td>
-                                    <td data-etiqueta="Paciente">Ana Torres Pinedo</td>
-                                    <td data-etiqueta="Motivo">Endodoncia (sesión 4)</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-atendida">Atendida</span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
-                                </tr>
-
-                                <tr>
-                                    <td class="celda-fija" data-etiqueta="Hora">16:30</td>
-                                    <td data-etiqueta="Paciente">Jorge Salas Mori</td>
-                                    <td data-etiqueta="Motivo">Blanqueamiento</td>
-                                    <td data-etiqueta="Estado"><span class="insignia insignia-cancelada"></span></td>
-                                    <td data-etiqueta="Acción"><a class="boton boton-pequeno" href="atencion_paciente.html" aria-label="Atender" title="Atender"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="boton-texto">Atender</span></a></td>
+                                    <td class="celda-fija" data-etiqueta="DNI">41236587</td>
+                                    <td data-etiqueta="Paciente">Ríos Flores, Carlos</td>
+                                    <td data-etiqueta="Teléfono">998112233</td>
+                                    <td class="col-secundaria" data-etiqueta="Correo">carlos.rios@correo.com</td>
+                                    <td data-etiqueta="Acciones">
+                                        <div class="tabla-acciones">
+                                            <a class="boton boton-pequeno" aria-label="Ver ficha" title="Ver ficha" href="atencion_paciente.html">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-ver"></use>
+                                                </svg>
+                                                <span class="boton-texto">Ver ficha</span>
+                                            </a>
+                                            <a class="boton boton-pequeno" href="#" aria-label="Editar" title="Editar">
+                                                <svg class="icono" aria-hidden="true">
+                                                    <use href="#icono-editar"></use>
+                                                </svg>
+                                                <span class="boton-texto">Editar</span>
+                                            </a>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
 
-                <section class="tarjeta" id="tarjeta-accesos-rapidos">
-                    <h2 class="tarjeta-titulo">Accesos rápidos</h2>
-                    <div class="grupo-botones">
-                        <a class="boton boton-primario" id="boton-nueva-cita" href="citas.html"><svg class="icono" aria-hidden="true"><use href="#icono-mas"></use></svg>Registrar cita</a>
-                        <a class="boton" id="boton-nuevo-paciente" href="pacientes.html"><svg class="icono" aria-hidden="true"><use href="#icono-pacientes"></use></svg>Registrar paciente</a>
-                        <a class="boton" id="boton-nuevo-pago" href="pagos.html"><svg class="icono" aria-hidden="true"><use href="#icono-pagos"></use></svg>Registrar pago</a>
-                    </div>
-                </section>
+                    <!--Aca habrá un aviso oculto (hidden) que se muestra cuando el buscador no encuantra nada-->
+                    <p class="alerta alerta-advertencia" id="sin-resultados-pacientes" hidden>No se encontraron pacientes.</p>
+                </section>                    
             </main>
         </div>
     </div>
