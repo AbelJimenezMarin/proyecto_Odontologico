@@ -1,0 +1,15 @@
+/* =====================================================================
+   ARCHIVO 1: variables.css  -  IDENTIDAD VISUAL (tokens de diseño)
+   Aquí se definen TODOS los colores, tipografías, espaciados, radios y
+   sombras. Si algo debe cambiar en toda la aplicación, se cambia solo aquí.
+   ===================================================================== */
+
+:root {
+    /* ---- Marca: verde clínico + dorado de acento (uso mínimo) ---- */
+    --marca-50: #eef7f3; /* verde casi blanco: fondo de la opción activa del menú y de los recuadros de íconos */
+    --marca-100: #d6ece3; /* verde suave: avatar y resplandor del inicio de sesión */
+    --marca-600: #0f7a5c; /* Verde principal: botones, enlaces y barras de progreso */
+    --marca-700: #0b6049; /* Verde más oscuro: botón al pasar el mouse y texto de la opción activa */
+    --marca-800: #094a38; /* Verde muy oscuro: letras sobre fondos verdes suaves */
+    --acento-500: #c18a0e; /* Dorado: detalle de marca, se usa muy poco */
+}
