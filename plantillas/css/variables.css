@@ -12,4 +12,52 @@
     --marca-700: #0b6049; /* Verde más oscuro: botón al pasar el mouse y texto de la opción activa */
     --marca-800: #094a38; /* Verde muy oscuro: letras sobre fondos verdes suaves */
     --acento-500: #c18a0e; /* Dorado: detalle de marca, se usa muy poco */
+
+    /* ----Neutros---- */
+
+    --texto: #16211c; /* texto principal */
+    --texto-suave: #46554e; /* texto secundaria: etiquetas y descripciones */
+    --texto-tenue: #5b6a63; /* texto de apoyo: encabezados de tabla y marcas de agua */
+    --borde: #dfe6e2; /*líneas finas de las tarjetas y tablas */
+    --borde-fuerte: #c5d0ca; /* borde de los botones y campos */
+    --fondo: #f5f7f6; /* fondo general de la página */
+    --superficie: #ffffff; /*fondo de las tarjetas, menús y campos */
+    --superficie-2: #f9fbfa; /*fondo alterno: encabezado de la tabla y filas */
+    
+    /* ---- Estados (texto oscuro sobre fondo claro. */
+
+    --exito: #13693f;
+    --exito-fondo: #e2f4ea;
+    --advertencia: #8a5a00;
+    --advertencia-fondo: #fdf1d3;
+    --peligro: #b42318;
+    --peligro-fondo: #fdeceb;
+    --informacion: #1b5a99;
+    --informacion-fondo: #e5f0fb;
+    --neutro: #3d4a44;
+    --neutro-fondo: #e9eeeb;
+
+    /* ----Tipografía---- */
+
+    --fuente-base: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --texto-xs: 075rem;
+    --texto-sm: 0.8125rem;
+    --texto-md: 0.875rem;
+    --texto-base: 0.9375rem;
+    --texto-lg: 1.125rem;
+    --texto-xl: 1.5rem;
+    --peso-normal: 400;
+    --peso-medio: 600;
+    --peso-fuerte: 700; 
+
+    /* ----Espaciado (escala de 4 px)----*/
+
+    --espacio-1: 0.25rem;
+    --espacio-2: 0.5rem;
+    --espacio-3: 0.75rem;
+    --espacio-4: 1rem;
+    --espacio-5: 1.5rem;
+    --espacio-6: 2rem;
+    --espacio-7: 3rem;
+
 }
