@@ -1,0 +1,96 @@
+/* Componentes CSS: Piezas reutilizables */
+
+/* ---- Íconos (sprite SVG) ---- */
+/* Tamaño de todos los iconos (20px). Sin esto los SVG se ven enormes. "stroke": currentColor" hace que tomen el color del texto */
+.icono {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ---- Botones ---- */
+/* Botón Base: caja con borde, esquinas redondeadas y texto centrado. Alto mínimo de 40 px */
+.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;gap: var(--espacio-2);
+    min-height: var(--radio-m);
+    background: var(--superficie);
+    color: var(--texto);
+    font-size: var(--texto-md);
+    font-weight: var(--peso-medio);
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transicion);
+    border-color: var(--transicion);
+}
+
+/* Al pasar el mouse, el botón cambia de tono */
+.boton:hover {
+    background: var(--superficie-2);
+    border-color: var(--texto-tenue);
+    text-decoration: none;
+}
+
+/* Variante principal: verde sólido con letra blanca (la acción más importante de cada pantalla) */
+.boton-primario {
+    background: var(--marca-600);
+    border-color: var(--marca-600);
+    color: #fff;
+}
+
+/* Verde más oscuro al pasar el mouse */
+.boton-primario:hover {
+    background: var(--marca-700);
+    border-color: var(--marca-700);
+}
+
+/* Variante de peligro (por ejemplo Cancelar la cita): letra y borde rojos */
+.boton-peligro {
+    color: var(--peligro);
+    border-color: #e7b5b0;
+}
+
+/* Fondo rosado suave al pasar el mouse */
+.boton-peligro:hover {
+    background: var(--peligro-fondo);
+    border-color: var(--peligro);
+}
+
+/* Variante pequeña para usar dentro de las tablas */
+.boton-pequeno {
+    min-height: 34px;
+    padding: 0 var(--espacio-3);
+    font-size: var(--texto-sm);
+}
+
+/* Íconos más chicos dentro de los botones pequeños */
+.boton-pequeno .icono {
+    width: 16px;
+    height: 16px;
+}
+
+/* Variante de ancho completo (botón ingresar) */
+.boton-bloque {
+    width: 100%;
+}
+
+/* Botón desactivado (por ejemplo, hora ocupada): se ve atenuado y no se puede pulsar */
+.boton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Fila de botones que baja a otra línea si no caben */
+.grupo-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-3);
+}

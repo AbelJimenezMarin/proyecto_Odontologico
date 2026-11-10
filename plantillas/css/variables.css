@@ -40,24 +40,45 @@
     /* ----Tipografía---- */
 
     --fuente-base: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
-    --texto-xs: 075rem;
-    --texto-sm: 0.8125rem;
-    --texto-md: 0.875rem;
-    --texto-base: 0.9375rem;
-    --texto-lg: 1.125rem;
-    --texto-xl: 1.5rem;
-    --peso-normal: 400;
+    --texto-xs: 075rem; /* 12 px: etiquetas pequeñas (1rem = 16 px= */
+    --texto-sm: 0.8125rem; /* 13 px: tablas, apoyo */
+    --texto-md: 0.875rem; /* 14 px: botones, formularios */
+    --texto-base: 0.9375rem; /* 15 px: texto normal */
+    --texto-lg: 1.125rem; /* 18 px: título de tarjeta */
+    --texto-xl: 1.5rem; /* 24 px: título de página y cifras */
+    --peso-normal: 400; /* grosor de la letra: normal, medio y negrita */
     --peso-medio: 600;
     --peso-fuerte: 700; 
 
     /* ----Espaciado (escala de 4 px)----*/
 
-    --espacio-1: 0.25rem;
-    --espacio-2: 0.5rem;
-    --espacio-3: 0.75rem;
-    --espacio-4: 1rem;
-    --espacio-5: 1.5rem;
-    --espacio-6: 2rem;
-    --espacio-7: 3rem;
+    --espacio-1: 0.25rem; /* 4, 8 y 12 px */
+    --espacio-2: 0.5rem; /* 4, 8 y 12 px */
+    --espacio-3: 0.75rem; /* 4, 8 y 12 px */
+    --espacio-4: 1rem; /* 16, 24 y 32 px */
+    --espacio-5: 1.5rem; /* 16, 24 y 32 px */
+    --espacio-6: 2rem; /* 16, 24 y 32 px */
+    --espacio-7: 3rem; /* 48 px */
+
+    /* ---- Bordes, sombras y animaciones ---- */
+
+    --radio-s: 6px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-m: 8px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-l: 12px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-pildora: 999px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --sombra-1: 0 1px 2px rgba(16, 33, 27, 0.05); /* sombra mínima de las tarjetas */
+    --sombra-2: 0 1px 3px rgba(16, 33, 27, 0.06), 
+                0 8px 24px rgba(16, 33, 27, 0.06); 
+    --sombra-3: 0 16px 48px rgba(16, 33, 27, 0.18); /* sombra del menú móvil abierto */
+    --anillo-foco: 0 0 0 3px rgba(15, 122, 92, 0.28); /* halo verde al enfocar un campo o botón */
+    --transicion: 150ms ease; /* velocidad de los cambios de color */
+
+    /* ---- Medidas de la estructura ---- */
+
+    --ancho-barra-lateral: 264px; /* menú completo (escritorio) */
+    --ancho-barra-compacta: 72px; /* menú solo con íconos (tablet) */
+    --alto-barra-superior: 56px; /* alto de la barra superior */
+    --alto-control: 40px; /* alto de botones y campos */
+    --alto-tactil: 44px; /* mínimo recomendado para tocar con el dedo */
 
 }
