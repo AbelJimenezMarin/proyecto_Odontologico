@@ -40,7 +40,7 @@
     /* ----Tipografía---- */
 
     --fuente-base: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
-    --texto-xs: 075rem; /* 12 px: etiquetas pequeñas (1rem = 16 px= */
+    --texto-xs: 0.75rem; /* 12 px: etiquetas pequeñas (1rem = 16 px= */
     --texto-sm: 0.8125rem; /* 13 px: tablas, apoyo */
     --texto-md: 0.875rem; /* 14 px: botones, formularios */
     --texto-base: 0.9375rem; /* 15 px: texto normal */
