@@ -1,0 +1,103 @@
+/* RESPONSIVO.CSS - Adaptación a Tablet y movil, Se escribe de lo grande a lo pequeño: cada bloque solo cambia lo necesario */
+
+/* ----- Tablet horizontal y portatil pequeño (hasta 1279 px): menú compacto ----- */
+
+@media (max-width: 1279px) {               /* El menú pasa de 264 px a 72 px y los controles suben a 44 px (tamaño táctil). Basta cambiar estas dos variables */
+    :root {
+        --ancho-barra-lateral: var(--ancho-barra-compacta);
+        --alto-control: var(--alto-tactil);
+    }
+    /* La marca de centra (solo se ve el diente) */
+    .marca {
+        justify-content: center;
+        padding: 0;
+    }
+    /* Se ocultan los textos del menú: quedan solo íconos */
+    .marca-texto, .menu-texto, .perfil-texto {
+        display: none;
+    }
+    /* Menos espacio lateral en el manú */
+    .menu-contenedor {
+        padding: var(--espacio-3) var(--espacio-2);
+    }
+    /* Los rótulos de grupo se convierten en una lista fina separadora */
+    .menu-grupo {
+        height: 1px;
+        margin: var(--espacio-3) var(--espacio-2);
+        padding: 0;
+        font-size: 0;
+        background: var(--borde);
+    }
+    /* Íconos centrados en su botón */
+    .menu-enlace {
+        justify-content: center;
+        padding: 0;
+    }
+    /* La barrita activa se acerca al borde */
+    .menu-enlace.activo::before {
+        left: -8px;
+    }
+    /* El perfil se aplica: avatar arriba y botón de salir abajo */
+    .perfil {
+        flex-direction: column;
+        padding: var(--espacio-3) 0;
+        gap: var(--espacio-2);
+    }
+    /* Márgenes un poco menores */
+    .area-trabajo {
+        padding: var(--espacio-5);
+    }
+    /* Barra superior con menos relleno */
+    .barra-superior {
+        padding: 0 var(--espacio-5);
+    }
+    /* Botones pequeños de 44 x 44 px para tocarlos con el dedo */
+    .boton-pequeno {
+        min-width: var(--alto-tactil);
+        min-height: var(--alto-tactil);
+    }
+    /* En las tablas, los botones muestran solo el ícono */
+    .tabla .boton-pequeno {
+        padding: 0;
+    }
+    /* Ícono un poco más grande */
+    .tabla .boton-pequeno .icono {
+        width: 18px;
+        height: 18px;
+    }
+    /* Botón de salir de 44 px */
+    .perfil-salir {
+        width: var(--alto-tactil);
+        height: var(--alto-tactil);
+    }
+    /* Se oculta el texto de los botones de las tablas (queda el ícono; el nombre sigue en el atributo title) */
+    .boton-texto {
+        display: none;
+    }
+}
+
+/* ---- Tablet vertical (hasta 1199 px): menos columnas en tablas ---- */
+@media (max-width: 1199px) {                   /* Se oculta la columna correo para que la tabla respire */
+    .col-secundaria {
+        display: none;
+    }
+}
+
+/* ---- Tablet vertical (hasta 1023 px): rejillas más angostas ----*/
+@media (max-width: 1023px) {               /* Indicadores en 2 columnas */
+    .rejilla-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* Formularios y fichas en 2 columnas */
+    .rejilla-formulario, .rejilla-ficha {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    /* Un campo ancho sigue ocupando las 2 columnas */
+    .ocupa-dos {
+        grid-column: span 2;
+    }
+    /* El buscador ocupa todo el ancho */
+    .buscador {
+        max-width: none;
+    }
+}
