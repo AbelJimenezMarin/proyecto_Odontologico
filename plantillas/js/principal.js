@@ -114,10 +114,36 @@ function verificarDisponibilidad() {
     var mensaje = document.getElementById("mensaje-disponibilidad");
     var boton = document.getElementById("boton-guardar-cita");
     var libre = horasOcupadas.indexOf(hora) === -1;          // -1 significa "no esta en la lista"
+    mensaje.className = libre ? "alerta alerta-exito" : "alerta alerta-peligro";     //  color verde o rojo
+    mensaje.textContent = libre
+        ? "Horario disponible. Se enviará un recordatorio al correo del paciente."
+        : "Horario ocupado. Elija otra hora.";
+    boton.disabled = !libre;      // Desactiva el botón si la hora está ocupada    
+}
 
+var campoHoraCita = document.getElementById("campo-hora-cita");
+if (campoHoraCita) {
+    campoHoraCita.addEventListener("input", verificarDisponibilidad);     // se revisa cada vez que cambia la hora
+    verificarDisponibilidad();    // y una vez al abrir la página
+}
 
-
-
-
-    
+/* ------ GESTIÓN DE CITAS: cambiar estado en pantalla ------ */
+var tablaCitas = document.getElementById("tabla-citas");
+if (tablaCitas) {        // Un solo "oyente" en la tabla atiende los botones de todas las filas.
+    tablaCitas.addEventListener("click", function (evento) {
+        var boton = evento.target.closest("[data-accion]");      // ¿se pulso un boton con data-accion?
+        if (!boton) { return;}         // si no, no hacemos nada
+        var fila = boton.closest("tr");      // fila donde está el botón
+        var insignia = fila.querySelector(".insignia");       // etiqueta de estado de esa fila
+        var accion = boton.getAttribute("data-accion");      // confimar, cancelar o reprogramar
+        if (accion === "confirmar") {
+            insignia.textContent = "Confirmada"; insignia.className = "insignia insignia-confirmada";
+        }
+        if (accion === "cancelar") {
+            insignia.textContent = "Cancelada"; insignia.className = "insignia insignia-cancelada";
+        }
+        if (accion === "reprogramar") {
+            insignia.textContent = "Reprogramada"; insignia.className = "insignia insignia-programada";
+        }
+    });
 }

@@ -312,14 +312,32 @@
     align-items: center;
     justify-content: center;
     padding: var(--espacio-4);
-    background: radial-gradient(1000px 500px at 50% -10%, var(--marca-100), transparent 70%), var(--fondo);
+    background-image: linear-gradient(rgba(244, 246, 245, 0.55), rgba(244, 246, 245, 0.55)), url(/plantillas/imagenes/fondoConsultorio.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--fondo);
+    /*background: radial-gradient(1000px 500px at 50% -10%, var(--marca-100), transparent 70%), var(--fondo);*/
 }
 
 /* Tarjeta blanca del inicio de sesión (ancho máximo 420 px) */
 .caja-acceso {
+    /*width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.20);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    padding: var(--espacio-6);
+    box-shadow: 0 8px 32px rgba(15, 60, 40, 0.18);*/
+
+
     width: 100%;
     max-width: 420px;
-    background: var(--superficie);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.25), rgba(231, 244, 238, 0.50));
+    backdrop-filter: blur(px);
+    /*background: var(--superficie);*/
     border: 1px solid var(--borde);
     border-radius: 16px;
     padding: var(--espacio-6);
