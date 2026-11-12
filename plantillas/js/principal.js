@@ -147,3 +147,32 @@ if (tablaCitas) {        // Un solo "oyente" en la tabla atiende los botones de 
         }
     });
 }
+
+/* ------ PAGOS: Saldo pendiente ------ */
+// Regla: saldo = costo total -lo pagado (nunca menor que cero).
+function calcularSaldo(costoTotal, totalPagado) {
+    var saldo = costoTotal - totalPagado;
+    return saldo < 0 ? 0 : saldo;
+}
+
+// Convierte 1200 en "S/ 1,200.00" (con coma de miles y 2 decimales)
+function darFormatoSoles(numero) {
+    return "S/. " + numero.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+var campoMonto = document.getElementById("campo-monto");
+if (campoMonto) {          // solo existe en pagos.html
+    var costoTotal = 1200, totalPagado = 750;       // solo son datos de prueba
+    campoMonto.addEventListener("input", function () {       // se ejecuta cada vez que se escribe un monto
+        var monto = parseFloat(campoMonto.value) || 0;       // texto a número (si esta vacío, 0)
+        var mensaje = document.getElementById("mensaje-monto");
+        var saldoActual = calcularSaldo(costoTotal, totalPagado); 
+        var valido = monto > 0 && monto <= saldoActual;      // debe ser mayor que 0 y no pasar del saldo
+        mensaje.textContent = valido ? "" : "El monto debe ser mayor que 0 y no superar el saldo pendiente.";
+        campoMonto.classList.toggle("campo-invalido", !valido);
+        document.getElementById("boton-guardar-pago").disabled = !valido;         // bloquea el botón si no es válido.
+        // Muestra cuantó quedaría por pagar despues de este pago.
+        document.getElementById("valor-saldo-despues").textContent = darFormatoSoles(calcularSaldo(costoTotal, totalPagado + (valido ? monto : 0)));
+    });
+}
+
