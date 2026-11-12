@@ -312,7 +312,7 @@
     align-items: center;
     justify-content: center;
     padding: var(--espacio-4);
-    background-image: linear-gradient(rgba(244, 246, 245, 0.55), rgba(244, 246, 245, 0.55)), url(/plantillas/imagenes/fondoConsultorio.jpeg);
+    background-image: linear-gradient(rgba(244, 246, 245, 0.55), rgba(244, 246, 245, 0.55)), url("../imagenes/fondoConsultorio.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
