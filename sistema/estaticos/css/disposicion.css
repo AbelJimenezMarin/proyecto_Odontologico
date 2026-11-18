@@ -416,3 +416,8 @@
 font-weight: bold; }
 .perfil-salir { color: #080101; }
 .perfil-salir:hover { background: rgba(255, 255, 255, 0.18); color: #080101; }
+
+/* Imagen de fondo del área de trabajo (se ve detrás de las tarjetas blancas). */
+.contenido-principal {
+    background: linear-gradient(rgba(245, 247, 246, 0.70), rgba(245, 247, 246, 0.70)), url("../imagenes/fondoDiente.png") center / cover no-repeat fixed;
+}

@@ -34,27 +34,16 @@ class Cita(models.Model):
             models.CheckConstraint(condition=Q(estado__in=TODOS_LOS_ESTADOS), name="CK_Cita_estado"),
         ]
 
-
-
-
-
-
-
-
-
-        
-
-@property
-def es_vigente(self):
+    @property
+    def es_vigente(self):
         return self.estado in ESTADOS_VIGENTES
 
-@property
-def clase_insignia(self):
+    @property
+    def clase_insignia(self):
         """Clase CSS de la etiqueta de color según el estado."""
         return {"Programada": "insignia-programada", "Reprogramada": "insignia-programada",
                 "Confirmada": "insignia-confirmada", "Atendida": "insignia-atendida",
+                "Cancelada": "insignia-cancelada"}[self.estado]
 
-"Cancelada": "insignia-cancelada"}[self.estado]
-
-def __str__(self):
+    def __str__(self):
         return "%s %s - %s" % (self.fecha_cita, self.hora_cita.strftime("%H:%M"), self.paciente)
