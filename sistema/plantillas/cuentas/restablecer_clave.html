@@ -1,0 +1,20 @@
+{% extends "cuentas/base_acceso.html" %}
+{% block titulo %}Contraseña nueva{% endblock %}
+{% block contenido %}
+{% if validlink %}
+<h1>Crear contraseña nueva</h1>
+<p class="texto-apoyo">Use al menos 8 caracteres, y que no sea una contraseña común ni solo números.</p>
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="campo"><label class="etiqueta" for="id_new_password1">Contraseña nueva</label>{{ form.new_password1 }}</div>
+    <div class="campo"><label class="etiqueta" for="id_new_password2">Repita la contraseña</label>{{ form.new_password2 }}</div>
+    {% for error in form.new_password1.errors %}<div class="alerta alerta-peligro" role="alert">{{ error }}</div>{% endfor %}
+    {% for error in form.new_password2.errors %}<div class="alerta alerta-peligro" role="alert">{{ error }}</div>{% endfor %}
+    <button class="boton boton-primario boton-bloque" type="submit">Guardar contraseña</button>
+</form>
+{% else %}
+<h1>Enlace no válido</h1>
+<div class="alerta alerta-advertencia" role="alert">Este enlace ya se usó o caducó. Pida uno nuevo.</div>
+<p class="enlace-ayuda"><a href="{% url 'recuperar_clave' %}">Pedir un enlace nuevo</a></p>
+{% endif %}
+{% endblock %}

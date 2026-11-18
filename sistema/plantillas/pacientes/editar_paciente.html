@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block titulo %}Editar paciente{% endblock %}
+{% block migas %}Pacientes / Editar{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Editar paciente</h1>
+        <p class="subtitulo-pagina">{{ paciente.apellidos_nombres }}{% if not paciente.activo %} · <strong>Inactivo</strong>{% endif %}
+        </p>
+    </div>
+</div>
+
+<section class="tarjeta" id="tarjeta-edicion-paciente">
+    <h2 class="tarjeta-titulo">Datos del paciente</h2>
+    <form id="formulario-paciente" method="post" novalidate>{% csrf_token %}
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="campo-dni">DNI *</label>{{ formulario.dni }}
+                <div class="mensaje-campo" id="error-dni">{{ formulario.dni.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-nombres">Nombres *</label>{{ formulario.nombres }}
+                <div class="mensaje-campo" id="error-nombres">{{ formulario.nombres.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-apellidos">Apellidos *</label>{{ formulario.apellidos }}
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-fecha-nacimiento">Fecha de nacimiento *</label>{{ formulario.fecha_nacimiento }}
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-sexo">Sexo *</label>{{ formulario.sexo }}
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-telefono">Teléfono *</label>{{ formulario.telefono }}
+                <div class="mensaje-campo" id="error-telefono">{{ formulario.telefono.errors.0 }}</div>
+            </div>
+            
+            <div class="campo ocupa-dos">
+                <label class="etiqueta" for="campo-correo">Correo electrónico</label>{{ formulario.correo }}
+                <div class="mensaje-campo">{{ formulario.correo.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-direccion">Dirección</label>{{ formulario.direccion }}
+            </div>
+            
+            <div class="campo ocupa-todo"><label class="etiqueta" for="campo-antecedentes">Antecedentes odontológicos y médicos</label>{{ formulario.antecedentes }}
+            </div>
+        </div>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit" id="boton-guardar-paciente">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Guardar cambios
+            </button>
+            
+            <a class="boton" href="{% url 'listar_pacientes' %}">Volver</a>
+        </div>
+    </form>
+</section>
+
+<!-- RN-03: no se elimina un paciente; se desactiva (o se reactiva). -->
+<section class="tarjeta" id="tarjeta-estado-paciente">
+    <h2 class="tarjeta-titulo">Estado del paciente</h2>
+    <p class="subtitulo-pagina">{% if paciente.activo %}Un paciente desactivado deja de aparecer en el listado y en las citas, pero se conserva su historial (RN-03).{% else %}Este paciente está inactivo. Reactívelo para volver a registrarle citas.{% endif %}</p>
+    
+    <form method="post" action="{% url 'cambiar_estado_paciente' paciente.pk %}">{% csrf_token %}
+        <button class="boton {% if paciente.activo %}boton-peligro{% else %}boton-primario{% endif %}" type="submit" id="boton-cambiar-estado">{% if paciente.activo %}Desactivar paciente{% else %}Reactivar paciente{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

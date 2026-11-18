@@ -1,0 +1,89 @@
+/* base.css. Reglas generales y reinicio de estilos */
+/* Regla clave: el ancho de cada elemento incluye su relleno y borde (evita que algo se salga de la pantalla). */
+*,*::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Evitar que los celulares agranden el texto por su cuanta */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Fondo, color del texto, tipografía y tamaño base de toda la aplicación (valores tomados de variables.css) */
+body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--fuente-base);
+    font-size: var(--texto-base);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+}
+
+/* Titulos: sin márgenes propios y con un poco de ajuste entre las letras */
+h1, h2, h3 {
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+/* Párrafos sin margenes externos (el espacio se lo da con "gap" y mérgenes específicos) */
+p {
+    margin: 0;
+}
+
+/* Enlaces en verde y sin subrayado */
+a {
+    color: var(--marca-600);
+    text-decoration: none;
+}
+
+/* qué aparece al pasar el mouse */
+a:hover {
+    text-decoration: underline;
+}
+
+/* Imágenes e íconos ya no estarán más anchos que su contenedor */
+img, svg {
+    max-width: 100%;
+}
+
+/* Tablas con bordes juntos (sin doble línea) */
+table {
+    border-collapse: collapse;
+}
+
+/* Botones y campos usan la misma letra y color que el resto de la página */
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+/* Cifras con ancho uniforme para que las columnas se vean alineadas */
+.numeros {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Anillo de foco visible al navegar con el teclado */
+/* Muestra un anillo color verde al navegar con la tecla Tab (accesibilidad) */
+:focus-visible {
+    outline: none;
+    box-shadow: var(--anillo-foco);
+    border-radius: var(--radio-s);
+}
+
+/* El atributo hidden siempre oculta, aunque otro estilo diga display: flex */
+/* Un elemento con el atributo hidden nunca se muestra */
+[hidden] {
+    display: none !important;
+}
+
+/* Se respeta a quien prefiere menos movimiento */
+/* Si la odontologa pide menos movimiento en su sistema, se quitan las animaciones */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}

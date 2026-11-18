@@ -27,7 +27,8 @@
     z-index: 30;
     display: flex;
     flex-direction: column;
-    background: var(--superficie);
+    /*background: var(--superficie);*/
+    background: #D29BFD;
     border-right: 1px solid var(--borde);
 }
 
@@ -392,3 +393,26 @@
     margin-top: var(--espacio-4);
     font-size: var(--texto-sm);
 } 
+
+/* ---------- Menú lateral con fondo oscuro: letras e íconos claros ---------- */
+.barra-lateral { color: #ffffff; border-right-color: transparent; }
+/* Logotipo: nombre y subtítulo */
+.marca { color: #080101; border-bottom-color: rgba(255, 255, 255, 0.3); }
+.marca-subtitulo { 
+    color: rgba(87, 4, 4, 0.85);
+    font-weight:bold; }
+/* Rótulos de grupo (GESTIÓN, CLÍNICA) */
+.menu-grupo { color: #080101; }
+/* Opciones del menú (el ícono toma este mismo color) */
+.menu-enlace { color: #080101; }
+.menu-enlace:hover { background: rgba(255, 255, 255, 0.18); color: #080101; }
+/* Opción activa: se mantiene el fondo claro con letra verde oscura */
+.menu-enlace.activo { background: #5a069b; color: #ffffff; }
+/* Perfil al pie del menú */
+.perfil { border-top-color: rgba(255, 255, 255, 0.3); }
+.perfil-texto strong { color: #080101; }
+.perfil-texto small { 
+    color: rgba(87, 4, 4, 0.85);
+font-weight: bold; }
+.perfil-salir { color: #080101; }
+.perfil-salir:hover { background: rgba(255, 255, 255, 0.18); color: #080101; }

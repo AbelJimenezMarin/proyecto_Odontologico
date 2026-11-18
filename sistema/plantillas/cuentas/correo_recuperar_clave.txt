@@ -1,0 +1,9 @@
+Hola, {{ user.nombre_completo }}:
+
+Recibimos una solicitud para cambiar la contraseña de su cuenta en el sistema del Consultorio Odontológico NADINNE.
+
+Para crear una contraseña nueva, abra este enlace (caduca en 1 hora):
+
+{{ protocol }}://{{ domain }}{% url 'restablecer_clave' uidb64=uid token=token %}
+
+Si usted no lo solicitó, ignore este mensaje: su contraseña actual no cambia.

@@ -1,0 +1,48 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión - Consultorio NADINNE</title>
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/componentes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/disposicion.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsivo.css' %}">
+</head>
+
+<body>
+{% include "_iconos.html" %}
+<main class="pagina-acceso" id="pagina-acceso">
+    <div class="caja-acceso" id="caja-acceso">
+        <div class="logotipo" id="logotipo">
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-diente"></use>
+            </svg>Consultorio Odontológico NADINNE<small>Sistema de gestión de citas y tratamientos</small>
+        </div>
+        
+        <h1 id="titulo-inicio-sesion">Iniciar sesión</h1>
+    <!-- Al enviar, Django comprueba el usuario y la contraseña. El token CSRF (abajo) protege el formulario. -->
+        <form id="formulario-inicio-sesion" method="post" novalidate>
+        {% csrf_token %}
+            <div class="campo">
+                <label class="etiqueta" for="campo-usuario">Usuario</label>{{ formulario.usuario }}
+            </div>
+        
+            <div class="campo">
+                <label class="etiqueta" for="campo-clave">Contraseña</label>{{ formulario.clave }}
+            </div>
+        
+        <!-- Aquí se muestra el error de Django (clave incorrecta) o el de principal.js (campos vacíos). -->
+            <div id="mensaje-error" role="alert"{% if formulario.non_field_errors %} class="alerta alerta-peligro"{% endif %}>{{ formulario.non_field_errors.0 }}
+            </div>
+            <button class="boton boton-primario boton-bloque" type="submit" id="boton-ingresar">Ingresar</button>
+            <p class="enlace-ayuda"><a href="{% url 'recuperar_clave' %}" id="enlace-recuperar-clave">¿Olvidó su contraseña?</a></p>
+        </form>
+    </div>
+</main>
+
+<script src="{% static 'js/principal.js' %}"></script>
+</body>
+</html>
+

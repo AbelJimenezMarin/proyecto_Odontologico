@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block titulo %}Citas{% endblock %}
+{% block migas %}Citas{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Citas</h1>
+        <p class="subtitulo-pagina">Programe, confirme, reprograme o cancele las citas del consultorio.</p>
+    </div>
+</div>
+
+<!-- REGISTRAR CITA (CU-03). Si la hora está ocupada, Django rechaza el formulario y muestra el error (RN-01). -->
+<section class="tarjeta" id="tarjeta-registro-cita">
+    <h2 class="tarjeta-titulo">Registrar cita</h2>
+    <form id="formulario-cita" method="post" novalidate>{% csrf_token %}
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="selector-paciente">Paciente *</label>{{ formulario.paciente }}
+                <div class="mensaje-campo">{{ formulario.paciente.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-fecha-cita">Fecha *</label>{{ formulario.fecha_cita }}
+                <div class="mensaje-campo">{{ formulario.fecha_cita.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-hora-cita">Hora *</label>{{ formulario.hora_cita }}
+                <div class="mensaje-campo">{{ formulario.hora_cita.errors.0 }}</div>
+            </div>
+            
+            <div class="campo ocupa-todo">
+                <label class="etiqueta" for="campo-motivo">Motivo de la consulta</label>{{ formulario.motivo }}
+            </div>
+            {% if formulario.non_field_errors %}
+            
+            <div class="ocupa-todo">
+                <div id="mensaje-disponibilidad" class="alerta alerta-peligro" role="alert">{{ formulario.non_field_errors.0 }}</div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit" id="boton-guardar-cita">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Guardar cita
+            </button>
+            
+            <button class="boton" type="reset" id="boton-cancelar-cita">Cancelar</button>
+        </div>
+    </form>
+</section>
+
+<!-- GESTIONAR CITAS (CU-04): cada botón es un pequeño formulario POST que cambia el estado en el servidor. -->
+<section class="tarjeta" id="tarjeta-gestion-citas">
+    <h2 class="tarjeta-titulo">{% if historial %}Historial de citas{% else %}Gestionar citas (desde hoy){% endif %}</h2>
+    <div class="entrada-con-icono buscador">
+        <svg class="icono" aria-hidden="true">
+            <use href="#icono-buscar"></use>
+        </svg>
+        
+        <input class="entrada" type="search" id="buscador-citas" placeholder="Buscar por paciente o estado" aria-label="Buscar cita" oninput="filtrarTabla('buscador-citas','tabla-citas','sin-resultados-citas')">
+    </div>
+    
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable" id="tabla-citas">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            
+            <tbody>{% for c in citas %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="Fecha">{{ c.fecha_cita|date:"d/m/Y" }}</td>
+                    <td class="celda-fija" data-etiqueta="Hora">{{ c.hora_cita|time:"H:i" }}</td>
+                    <td data-etiqueta="Paciente">{{ c.paciente.apellidos_nombres }}</td>
+                    <td data-etiqueta="Estado">
+                        <span class="insignia {{ c.clase_insignia }}">{{ c.estado }}</span></td>
+                    <td data-etiqueta="Acciones">
+                        <div class="tabla-acciones">
+                            {% if c.es_vigente %} {% if c.estado != "Confirmada" %}
+                            <form class="formulario-en-linea" method="post" action="{% url 'cambiar_estado_cita' c.pk 'confirmar' %}">{% csrf_token %}
+                                <button class="boton boton-pequeno" type="submit" aria-label="Confirmar" title="Confirmar">
+                                    <svg class="icono" aria-hidden="true">
+                                        <use href="#icono-confirmar"></use>
+                                    </svg>
+                                    <span class="boton-texto">Confirmar</span>
+                                </button>
+                            </form>{% endif %}
+                            
+                            <a class="boton boton-pequeno" href="{% url 'reprogramar_cita' c.pk %}" aria-label="Reprogramar" title="Reprogramar">
+                                <svg class="icono" aria-hidden="true">
+                                    <use href="#icono-reprogramar"></use>
+                                </svg>
+                                
+                                <span class="boton-texto">Reprogramar</span>
+                            </a>
+                            
+                            <form class="formulario-en-linea" method="post" action="{% url 'cambiar_estado_cita' c.pk 'cancelar' %}">{% csrf_token %}
+                                <button class="boton boton-pequeno boton-peligro" type="submit" aria-label="Cancelar" title="Cancelar">
+                                    <svg class="icono" aria-hidden="true">
+                                        <use href="#icono-cancelar"></use>
+                                    </svg>
+                                    
+                                    <span class="boton-texto">Cancelar</span></button></form>
+                                    {% else %}
+                                    <span class="dato-etiqueta">Sin acciones</span>
+                                    {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <p class="alerta alerta-advertencia" id="sin-resultados-citas" hidden>No se encontraron citas.</p>
+    {% if not citas %}
+    <p class="alerta alerta-advertencia">No hay citas para mostrar.</p>
+    {% endif %}
+    <p class="enlace-ayuda">{% if historial %}
+        <a href="{% url 'listar_citas' %}">Ver solo las citas desde hoy</a>{% else %}
+        <a href="?ver=historial">Ver historial completo</a>{% endif %}
+    </p>
+</section>{% endblock %}

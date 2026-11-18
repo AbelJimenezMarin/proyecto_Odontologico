@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load formato %}
+{% block titulo %}Pagos{% endblock %}
+{% block migas %}Pagos{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Pagos</h1>
+        <p class="subtitulo-pagina">Controle el costo, los pagos realizados y el saldo pendiente.</p>
+    </div>
+</div>
+{% if tratamiento %}
+
+<!-- Elegir el tratamiento (GET): recarga la pantalla con ?tratamiento=ID. -->
+<section class="tarjeta" id="tarjeta-elegir-tratamiento">
+    <form method="get" class="grupo-botones">
+        <div class="campo">
+            <label class="etiqueta" for="selector-tratamiento">Tratamiento</label>
+            <select class="selector" id="selector-tratamiento" name="tratamiento" onchange="this.form.submit()">
+                {% for t in tratamientos %}
+                <option value="{{ t.pk }}"{% if t.pk == tratamiento.pk %} selected{% endif %}>{{ t.tipo }} · {{ t.paciente.apellidos_nombres }}</option>{% endfor %}
+            </select>
+        </div>
+    </form>
+</section>
+
+<!-- RESUMEN DEL PAGO (RN-04): costo total, total pagado y saldo pendiente. -->
+<section class="tarjeta" id="tarjeta-resumen-pago">
+    <h2 class="tarjeta-titulo">{{ tratamiento.tipo }} · {{ tratamiento.paciente.apellidos_nombres }}</h2>
+    <div class="rejilla rejilla-pago" id="resumen-pago">
+        <div>
+            <div class="dato-etiqueta">Costo total</div>
+            <div class="valor-grande" id="valor-costo-total">{{ tratamiento.costo_total|soles }}</div>
+        </div>
+        
+        <div>
+            <div class="dato-etiqueta">Total pagado</div>
+            <div class="valor-grande" id="valor-total-pagado">{{ tratamiento.total_pagado|soles }}</div>
+        </div>
+        
+        <div>
+            <div class="dato-etiqueta">Saldo pendiente</div>
+            <div class="valor-grande valor-saldo" id="valor-saldo-pendiente">{{ tratamiento.saldo_pendiente|soles }}</div>
+        </div>
+    </div>
+</section>
+
+<!-- REGISTRAR PAGO (CU-06). data-saldo y data-costo se leen en principal.js para calcular el saldo al escribir. -->
+<section class="tarjeta" id="tarjeta-registro-pago">
+    <h2 class="tarjeta-titulo">Registrar pago</h2>
+    {% if tratamiento.saldo_pendiente > 0 %}
+    <form id="formulario-pago" method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="tratamiento" value="{{ tratamiento.pk }}">
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="campo-monto">Monto (S/) *</label>
+                <input class="entrada{% if formulario.monto.errors %} campo-invalido{% endif %}" type="number" step="0.01" min="0" id="campo-monto" name="monto" inputmode="decimal" value="{{ formulario.monto.value|default_if_none:'' }}" data-saldo="{{ tratamiento.saldo_pendiente|stringformat:'s' }}">
+                <div class="mensaje-campo" id="mensaje-monto">{{ formulario.monto.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="selector-metodo-pago">Método de pago *</label>{{ formulario.metodo_pago }}
+                <div class="mensaje-campo">{{ formulario.metodo_pago.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-fecha-pago">Fecha de pago *</label>{{ formulario.fecha_pago }}
+                <div class="mensaje-campo">{{ formulario.fecha_pago.errors.0 }}</div>
+            </div>
+        </div>
+        
+        <p class="saldo-despues">Saldo después del pago: <strong id="valor-saldo-despues">{{ tratamiento.saldo_pendiente|soles }}</strong></p>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit" id="boton-guardar-pago">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Registrar pago
+            </button>
+            
+            <button class="boton" type="reset" id="boton-cancelar-pago">Cancelar</button>
+        </div>
+    </form>
+    {% else %}
+    <p class="alerta alerta-exito">Este tratamiento está totalmente pagado.</p>
+    {% endif %}
+</section>
+
+<!-- HISTORIAL DE PAGOS -->
+<section class="tarjeta" id="tarjeta-historial-pagos">
+    <h2 class="tarjeta-titulo">Historial de pagos del tratamiento</h2>
+    {% if pagos %}
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable" id="tabla-pagos">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Método de pago</th>
+                </tr>
+            </thead>
+            
+            <tbody>{% for p in pagos %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="Fecha">{{ p.fecha_pago|date:"d/m/Y" }}</td>
+                    <td data-etiqueta="Monto">{{ p.monto|soles }}</td>
+                    <td data-etiqueta="Método de pago">{{ p.metodo_pago }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    
+    <p class="alerta alerta-advertencia">Aún no hay pagos registrados para este tratamiento.</p>{% endif %}
+</section>
+{% else %}
+
+<section class="tarjeta">
+    <p class="alerta alerta-advertencia">Todavía no hay tratamientos. Regístrelos desde la ficha del paciente (Atención de paciente).</p>
+</section>
+{% endif %}
+{% endblock %}

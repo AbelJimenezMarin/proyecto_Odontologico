@@ -1,0 +1,84 @@
+/* =====================================================================
+   ARCHIVO 1: variables.css  -  IDENTIDAD VISUAL (tokens de diseño)
+   Aquí se definen TODOS los colores, tipografías, espaciados, radios y
+   sombras. Si algo debe cambiar en toda la aplicación, se cambia solo aquí.
+   ===================================================================== */
+
+:root {
+    /* ---- Marca: verde clínico + dorado de acento (uso mínimo) ---- */
+    --marca-50: #eef7f3; /* verde casi blanco: fondo de la opción activa del menú y de los recuadros de íconos */
+    --marca-100: #d6ece3; /* verde suave: avatar y resplandor del inicio de sesión */
+    --marca-600: #0f7a5c; /* Verde principal: botones, enlaces y barras de progreso */
+    --marca-700: #0b6049; /* Verde más oscuro: botón al pasar el mouse y texto de la opción activa */
+    --marca-800: #094a38; /* Verde muy oscuro: letras sobre fondos verdes suaves */
+    --acento-500: #c18a0e; /* Dorado: detalle de marca, se usa muy poco */
+
+    /* ----Neutros---- */
+
+    --texto: #16211c; /* texto principal */
+    --texto-suave: #46554e; /* texto secundaria: etiquetas y descripciones */
+    --texto-tenue: #5b6a63; /* texto de apoyo: encabezados de tabla y marcas de agua */
+    --borde: #dfe6e2; /*líneas finas de las tarjetas y tablas */
+    --borde-fuerte: #c5d0ca; /* borde de los botones y campos */
+    --fondo: #f5f7f6; /* fondo general de la página */
+    --superficie: #ffffff; /*fondo de las tarjetas, menús y campos */
+    --superficie-2: #f9fbfa; /*fondo alterno: encabezado de la tabla y filas */
+    
+    /* ---- Estados (texto oscuro sobre fondo claro. */
+
+    --exito: #13693f;
+    --exito-fondo: #e2f4ea;
+    --advertencia: #8a5a00;
+    --advertencia-fondo: #fdf1d3;
+    --peligro: #b42318;
+    --peligro-fondo: #fdeceb;
+    --informacion: #1b5a99;
+    --informacion-fondo: #e5f0fb;
+    --neutro: #3d4a44;
+    --neutro-fondo: #e9eeeb;
+
+    /* ----Tipografía---- */
+
+    --fuente-base: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --texto-xs: 0.75rem; /* 12 px: etiquetas pequeñas (1rem = 16 px= */
+    --texto-sm: 0.8125rem; /* 13 px: tablas, apoyo */
+    --texto-md: 0.875rem; /* 14 px: botones, formularios */
+    --texto-base: 0.9375rem; /* 15 px: texto normal */
+    --texto-lg: 1.125rem; /* 18 px: título de tarjeta */
+    --texto-xl: 1.5rem; /* 24 px: título de página y cifras */
+    --peso-normal: 400; /* grosor de la letra: normal, medio y negrita */
+    --peso-medio: 600;
+    --peso-fuerte: 700; 
+
+    /* ----Espaciado (escala de 4 px)----*/
+
+    --espacio-1: 0.25rem; /* 4, 8 y 12 px */
+    --espacio-2: 0.5rem; /* 4, 8 y 12 px */
+    --espacio-3: 0.75rem; /* 4, 8 y 12 px */
+    --espacio-4: 1rem; /* 16, 24 y 32 px */
+    --espacio-5: 1.5rem; /* 16, 24 y 32 px */
+    --espacio-6: 2rem; /* 16, 24 y 32 px */
+    --espacio-7: 3rem; /* 48 px */
+
+    /* ---- Bordes, sombras y animaciones ---- */
+
+    --radio-s: 6px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-m: 8px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-l: 12px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --radio-pildora: 999px; /* esquinas: pequeña, controles, tarjetas y redonda (insignias) */
+    --sombra-1: 0 1px 2px rgba(16, 33, 27, 0.05); /* sombra mínima de las tarjetas */
+    --sombra-2: 0 1px 3px rgba(16, 33, 27, 0.06), 
+                0 8px 24px rgba(16, 33, 27, 0.06); 
+    --sombra-3: 0 16px 48px rgba(16, 33, 27, 0.18); /* sombra del menú móvil abierto */
+    --anillo-foco: 0 0 0 3px rgba(15, 122, 92, 0.28); /* halo verde al enfocar un campo o botón */
+    --transicion: 150ms ease; /* velocidad de los cambios de color */
+
+    /* ---- Medidas de la estructura ---- */
+
+    --ancho-barra-lateral: 264px; /* menú completo (escritorio) */
+    --ancho-barra-compacta: 72px; /* menú solo con íconos (tablet) */
+    --alto-barra-superior: 56px; /* alto de la barra superior */
+    --alto-control: 40px; /* alto de botones y campos */
+    --alto-tactil: 44px; /* mínimo recomendado para tocar con el dedo */
+
+}

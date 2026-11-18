@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load formato %}
+{% block titulo %}Panel principal{% endblock %}
+{% block migas %}Panel principal{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Panel principal</h1>
+        <p class="subtitulo-pagina">Resumen de la jornada del {{ hoy|date:"l j \d\e F \d\e Y" }}.</p>
+    </div>
+    <a class="boton boton-primario" id="boton-nueva-cita-cabecera" href="{% url 'listar_citas' %}">
+        <svg class="icono" aria-hidden="true"><use href="#icono-mas"></use>
+        </svg>Registrar cita
+    </a>
+</div>
+
+<!-- INDICADORES: las cuatro cifras vienen de la base de datos (vista panel de configuracion/views.py). -->
+<section class="rejilla rejilla-resumen" id="resumen-del-dia" aria-label="Resumen del día">
+    <div class="indicador">
+        <div class="indicador-cabecera">
+            <span class="indicador-texto">Citas de hoy</span>
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-citas"></use>
+            </svg>
+        </div>
+        
+        <div class="indicador-numero" id="total-citas-hoy">{{ total_citas_hoy }}</div>
+    </div>
+    <div class="indicador">
+        <div class="indicador-cabecera">
+            <span class="indicador-texto">Pacientes registrados</span>
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-pacientes"></use>
+            </svg>
+        </div>
+        
+        <div class="indicador-numero" id="total-pacientes">{{ total_pacientes }}</div>
+    </div>
+    
+    <div class="indicador">
+        <div class="indicador-cabecera">
+            <span class="indicador-texto">Tratamientos en curso</span>
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-atencion"></use>
+            </svg>
+        </div>
+        
+        <div class="indicador-numero" id="total-tratamientos">{{ total_tratamientos }}</div>
+    </div>
+    
+    <div class="indicador indicador-alerta">
+        <div class="indicador-cabecera">
+            <span class="indicador-texto">Saldo pendiente de cobro</span>
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-dinero"></use>
+            </svg>
+        </div>
+        
+        <div class="indicador-numero" id="total-saldo">{{ saldo_total|soles }}</div>
+    </div>
+</section>
+
+<!-- AGENDA DEL DÍA: las citas de hoy, ordenadas por hora. -->
+<section class="tarjeta" id="tarjeta-agenda-del-dia">
+    <h2 class="tarjeta-titulo">Agenda del día · {{ hoy|date:"d/m/Y" }}</h2>
+    {% if citas_hoy %}
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable" id="tabla-agenda-dia">
+            <thead>
+                <tr>
+                    <th>Hora</th>
+                    <th>Paciente</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            
+            <tbody>{% for cita in citas_hoy %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="Hora">{{ cita.hora_cita|time:"H:i" }}</td>
+                    <td data-etiqueta="Paciente">{{ cita.paciente.nombre_completo }}</td>
+                    <td data-etiqueta="Motivo">{{ cita.motivo|default:"-" }}</td>
+                    <td data-etiqueta="Estado">
+                        <span class="insignia {{ cita.clase_insignia }}">{{ cita.estado }}</span></td>
+                    <td data-etiqueta="Acción">
+                        <a class="boton boton-pequeno" href="{% url 'ficha_paciente' cita.paciente_id %}?cita={{ cita.pk }}" aria-label="Atender" title="Atender">
+                            <svg class="icono" aria-hidden="true">
+                                <use href="#icono-atencion"></use>
+                            </svg>
+                            <span class="boton-texto">Atender</span>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    
+    <p class="alerta alerta-advertencia">No hay citas programadas para hoy.</p>
+    {% endif %}
+</section>
+
+<section class="tarjeta" id="tarjeta-accesos-rapidos">
+    <h2 class="tarjeta-titulo">Accesos rápidos</h2>
+    <div class="grupo-botones">
+        <a class="boton boton-primario" id="boton-nueva-cita" href="{% url 'listar_citas' %}">
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-mas"></use>
+            </svg>Registrar cita
+        </a>
+        
+        <a class="boton" id="boton-nuevo-paciente" href="{% url 'listar_pacientes' %}">
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-pacientes"></use>
+            </svg>Registrar paciente
+        </a>
+        
+        <a class="boton" id="boton-nuevo-pago" href="{% url 'registrar_pago' %}">
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-pagos"></use>
+            </svg>Registrar pago
+        </a>
+    </div>
+</section>
+{% endblock %}

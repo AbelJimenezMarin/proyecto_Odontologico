@@ -1,0 +1,101 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Cada pantalla escribe su título dentro de este bloque. -->
+        <title>
+            {% block titulo %}Consultorio NADINNE{% endblock %} - Consultorio NADINNE
+        </title>
+        <!-- Mismas hojas de estilo del prototipo, ahora servidas por Django con la etiqueta static. -->
+        <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'css/componentes.css' %}">
+        <link rel="stylesheet" href="{% static 'css/disposicion.css' %}">
+        <link rel="stylesheet" href="{% static 'css/responsivo.css' %}">
+    </head>
+
+    <body>
+        {% include "_iconos.html" %}
+        <!-- ESTRUCTURA GENERAL (igual en todas las pantallas): menú lateral + contenido. -->
+        <div class="aplicacion" id="aplicacion">
+
+            <!-- MENÚ LATERAL. La variable "menú" (la envía cada vista) marca la opción activa. -->
+            <aside class="barra-lateral" id="barra-lateral" aria-label="Menú principal">
+                <div class="marca" id="marca">
+                    <svg class="icono" aria-hidden="true">
+                        <use href="#icono-diente"></use>   
+                    </svg>
+                    <span class="marca-texto">
+                        Consultorio NADINNE
+                        <span class="marca-subtitulo">Odontología</span>
+                    </span>
+                </div>
+
+                <nav class="menu-contenedor" id="manu-lateral">
+                    <p class="menu-grupo">Gestión</p>
+                    <ul class="menu">
+                        <li><a class="menu-enlace{% if menu == 'panel' %} activo{% endif %}" {% if menu == 'panel' %}aria-current="page" {% endif %}id="menu-panel" href="{% url 'panel' %}" title="Panel principal">
+                            <svg class="icono" aria-hidden="true">
+                                <use href="#icono-panel"></use>
+                            </svg>
+                            <span class="menu-texto">Panel principal</span>
+                        </a></li>
+
+                        <li><a class="menu-enlace{% if menu == 'pacientes' %} activo{% endif %}" {% if menu == 'pacientes' %}aria-current="page" {% endif %}id="menu-pacientes" href="{% url 'listar_pacientes' %}" title="Pacientes"><svg class="icono" aria-hidden="true"><use href="#icono-pacientes"></use></svg><span class="menu-texto">Pacientes</span></a></li>
+                        
+                        <li><a class="menu-enlace{% if menu == 'citas' %} activo{% endif %}" {% if menu == 'citas' %}aria-current="page" {% endif %}id="menu-citas" href="{% url 'listar_citas' %}" title="Citas"><svg class="icono" aria-hidden="true"><use href="#icono-citas"></use></svg><span class="menu-texto">Citas</span></a></li>
+                    </ul>
+                    
+                    <p class="menu-grupo">Clínica</p>
+                    
+                    <ul class="menu">
+                        <li><a class="menu-enlace{% if menu == 'atencion' %} activo{% endif %}" {% if menu == 'atencion' %}aria-current="page" {% endif %}id="menu-atencion" href="{% url 'elegir_paciente' %}" title="Atención de paciente"><svg class="icono" aria-hidden="true"><use href="#icono-atencion"></use></svg><span class="menu-texto">Atención de paciente</span></a></li>
+                        
+                        <li><a class="menu-enlace{% if menu == 'pagos' %} activo{% endif %}" {% if menu == 'pagos' %}aria-current="page" {% endif %}id="menu-pagos" href="{% url 'registrar_pago' %}" title="Pagos"><svg class="icono" aria-hidden="true"><use href="#icono-pagos"></use></svg><span class="menu-texto">Pagos</span></a></li>
+                    </ul>
+                </nav>
+
+                <!-- Perfil de la usuaria que inició sesión. Cerrar sesión es un formulario POST (más seguro que un enlace). -->
+                <div class="perfil" id="perfil-usuario">
+                    <span class="avatar" aria-hidden="true">{{ user.iniciales }}</span>
+                    <span class="perfil-texto"><strong>{{ user.nombre_completo }}</strong><small>{{ user.rol }}</small></span>
+                    
+                    <form class="formulario-salir" method="post" action="{% url 'cerrar_sesion' %}">{% csrf_token %}
+                        <button class="perfil-salir" id="menu-cerrar-sesion" type="submit" title="Cerrar sesión" aria-label="Cerrar sesión">
+                            <svg class="icono" aria-hidden="true">
+                                <use href="#icono-salir"></use>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </aside>
+            <div class="fondo-menu" id="fondo-menu"></div>
+
+            <div class="contenido-principal" id="contenido-principal">
+                <header class="barra-superior" id="barra-superior">
+                    <button class="boton boton-menu" id="boton-menu" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="barra-lateral">
+                        <svg class="icono" aria-hidden="true">
+                            <use href="#icono-menu"></use>
+                        </svg>
+                    </button>
+                    
+                    <span class="migas" id="migas"><span class="migas-raiz">Consultorio NADINNE / </span><strong>{% block migas %}{% endblock %}</strong></span>
+                    
+                    <span class="fecha-actual numeros" id="fecha-actual">{% now "d/m/Y" %}</span>
+                </header>
+                
+                <main class="area-trabajo" id="area-trabajo">
+                    <!-- Mensajes de Django (éxito o error) después de guardar o rechazar una acción. -->
+                    {% for mensaje in messages %}
+                    <div class="alerta {% if mensaje.tags == 'error' %}alerta-peligro{% elif mensaje.tags == 'success' %}alerta-exito{% else %}alerta-advertencia{% endif %}" role="status">{{ mensaje }}</div>
+                    {% endfor %}
+                    {% block contenido %}{% endblock %}
+                </main>
+                </div>
+            </div>
+            
+            <script src="{% static 'js/principal.js' %}"></script>
+            {% block scripts %}{% endblock %}
+    </body>
+</html>

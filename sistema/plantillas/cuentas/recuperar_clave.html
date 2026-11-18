@@ -1,0 +1,13 @@
+{% extends "cuentas/base_acceso.html" %}
+{% block titulo %}Recuperar contraseña{% endblock %}
+{% block contenido %}
+<h1>Recuperar contraseña</h1>
+<p class="texto-apoyo">Escriba el correo de su cuenta. Le enviaremos un enlace para crear una contraseña nueva.</p>
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="campo"><label class="etiqueta" for="id_email">Correo</label>{{ form.email }}</div>
+    {% if form.email.errors %}<div class="alerta alerta-peligro" role="alert">{{ form.email.errors.0 }}</div>{% endif %}
+    <button class="boton boton-primario boton-bloque" type="submit">Enviar enlace</button>
+    <p class="enlace-ayuda"><a href="{% url 'iniciar_sesion' %}">Volver a iniciar sesión</a></p>
+</form>
+{% endblock %}

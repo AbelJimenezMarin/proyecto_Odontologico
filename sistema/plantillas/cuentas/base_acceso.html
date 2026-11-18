@@ -1,0 +1,27 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}{% endblock %} - Consultorio NADINNE</title>
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/componentes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/disposicion.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsivo.css' %}">
+</head>
+
+<body>
+{% include "_iconos.html" %}
+    <main class="pagina-acceso">
+        <div class="caja-acceso">
+            <div class="logotipo">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-diente"></use>
+                </svg>Consultorio Odontológico NADINNE<small>Sistema de gestión de citas y tratamientos</small>
+            </div>
+            {% block contenido %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>

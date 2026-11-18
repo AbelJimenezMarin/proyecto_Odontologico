@@ -1,0 +1,7 @@
+{% extends "cuentas/base_acceso.html" %}
+{% block titulo %}Contraseña cambiada{% endblock %}
+{% block contenido %}
+<h1>Contraseña cambiada</h1>
+<div class="alerta alerta-exito" role="status">Su contraseña se cambió correctamente.</div>
+<p class="enlace-ayuda"><a class="boton boton-primario boton-bloque" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a></p>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Reprogramar cita{% endblock %}
+{% block migas %}Citas / Reprogramar{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Reprogramar cita</h1>
+        <p class="subtitulo-pagina">{{ cita.paciente.apellidos_nombres }} · actualmente {{ cita.fecha_cita|date:"d/m/Y" }} a las {{ cita.hora_cita|time:"H:i" }}.</p>
+    </div>
+</div>
+
+<section class="tarjeta" id="tarjeta-reprogramar-cita">
+    <h2 class="tarjeta-titulo">Nueva fecha y hora</h2>
+    <form id="formulario-reprogramar" method="post" novalidate>{% csrf_token %}
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="campo-fecha-cita">Fecha *</label>{{ formulario.fecha_cita }}
+                <div class="mensaje-campo">{{ formulario.fecha_cita.errors.0 }}</div>
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-hora-cita">Hora *</label>{{ formulario.hora_cita }}
+                <div class="mensaje-campo">{{ formulario.hora_cita.errors.0 }}</div>
+            </div>{% if formulario.non_field_errors %}
+            
+            <div class="ocupa-todo">
+                <div class="alerta alerta-peligro" role="alert">{{ formulario.non_field_errors.0 }}</div>
+            </div>{% endif %}
+        </div>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit" id="boton-guardar-reprogramacion">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Reprogramar
+            </button>
+            
+            <a class="boton" href="{% url 'listar_citas' %}">Volver</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

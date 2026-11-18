@@ -531,3 +531,8 @@
     font-variant-numeric: tabular-nums;
 }
 
+/* Indicadores: número centrado y mas grande ---- */
+.indicador-numero {
+    text-align: center;
+    font-size: 2rem;
+}

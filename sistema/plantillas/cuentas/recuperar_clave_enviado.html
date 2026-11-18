@@ -1,0 +1,7 @@
+{% extends "cuentas/base_acceso.html" %}
+{% block titulo %}Revise su correo{% endblock %}
+{% block contenido %}
+<h1>Revise su correo</h1>
+<div class="alerta alerta-exito" role="status">Si el correo está registrado, le enviamos un enlace para crear una contraseña nueva. El enlace caduca en 1 hora.</div>
+<p class="enlace-ayuda"><a href="{% url 'iniciar_sesion' %}">Volver a iniciar sesión</a></p>
+{% endblock %}

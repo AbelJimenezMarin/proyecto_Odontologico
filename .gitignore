@@ -1,0 +1,15 @@
+#Entorno virtual de Python
+
+venv/
+entorno/
+.venv/
+#Archivos temporales de Python
+__pycache__/
+*.pyc
+#Variables de entorno (contiene contraseñas: NUNCA se deben subir  GITHUB)
+.env
+#Base de datos local de pruebas
+*.sqlite3
+#Archivos del editor y del sistema
+.vscode/
+.DS_Store

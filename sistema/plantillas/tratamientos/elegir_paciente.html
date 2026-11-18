@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block titulo %}Atención de paciente{% endblock %}
+{% block migas %}Atención de paciente{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Atención de paciente</h1>
+        <p class="subtitulo-pagina">Elija un paciente para consultar su ficha y registrar sesiones.</p>
+    </div>
+</div>
+
+<section class="tarjeta" id="tarjeta-elegir-paciente">
+    <h2 class="tarjeta-titulo">Pacientes</h2>
+    <div class="entrada-con-icono buscador">
+        <svg class="icono" aria-hidden="true">
+            <use href="#icono-buscar"></use>
+        </svg>
+        
+        <input class="entrada" type="search" id="buscador-atencion" placeholder="Buscar por DNI o apellidos" aria-label="Buscar paciente" oninput="filtrarTabla('buscador-atencion','tabla-atencion','sin-resultados-atencion')">
+    </div>
+    
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable" id="tabla-atencion">
+            <thead>
+                <tr>
+                    <th>DNI</th>
+                    <th>Apellidos y nombres</th>
+                    <th>Teléfono</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            
+            <tbody>{% for p in pacientes %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="DNI">{{ p.dni }}</td>
+                    <td data-etiqueta="Paciente">{{ p.apellidos_nombres }}</td>
+                    <td data-etiqueta="Teléfono">{{ p.telefono }}</td>
+                    <td data-etiqueta="Acción">
+                        <a class="boton boton-pequeno" href="{% url 'ficha_paciente' p.pk %}" aria-label="Atender" title="Atender">
+                            <svg class="icono" aria-hidden="true">
+                                <use href="#icono-atencion"></use>
+                            </svg>
+                            <span class="boton-texto">Atender</span>
+                        </a>
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <p class="alerta alerta-advertencia" id="sin-resultados-atencion" hidden>No se encontraron pacientes.</p>
+    {% if not pacientes %}
+    
+    <p class="alerta alerta-advertencia">Aún no hay pacientes registrados.</p>
+    {% endif %}
+</section>
+{% endblock %}

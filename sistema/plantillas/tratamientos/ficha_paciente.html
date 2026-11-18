@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block titulo %}Ficha de {{ paciente.apellidos_nombres }}{% endblock %}
+{% block migas %}Atención de paciente / {{ paciente.apellidos_nombres }}{% endblock %}
+{% block contenido %}
+<div class="encabezado-pagina" id="encabezado-pagina">
+    <div>
+        <h1 class="titulo-pagina" id="titulo-pagina">Atención de paciente</h1>
+        <p class="subtitulo-pagina">Consulte la ficha y registre la sesión del tratamiento.</p>
+    </div>
+</div>
+{% if cita_actual and cita_actual.es_vigente %}
+
+<!-- Llegó desde la agenda: se puede marcar la cita como atendida. -->
+<section class="tarjeta" id="tarjeta-cita-actual">
+    <h2 class="tarjeta-titulo">Cita de {{ cita_actual.fecha_cita|date:"d/m/Y" }} a las {{ cita_actual.hora_cita|time:"H:i" }}
+        <span class="insignia {{ cita_actual.clase_insignia }}">{{ cita_actual.estado }}</span></h2>
+    
+    <form method="post" action="{% url 'cambiar_estado_cita' cita_actual.pk 'atender' %}">{% csrf_token %}
+        <input type="hidden" name="siguiente" value="{% url 'ficha_paciente' paciente.pk %}">
+        <button class="boton boton-primario" type="submit" id="boton-marcar-atendida">
+            <svg class="icono" aria-hidden="true">
+                <use href="#icono-confirmar"></use>
+            </svg>Marcar cita como atendida
+        </button>
+    </form>
+</section>
+{% endif %}
+
+<!-- FICHA DEL PACIENTE (CU-05) -->
+<section class="tarjeta" id="tarjeta-ficha-paciente">
+    <h2 class="tarjeta-titulo">Ficha del paciente</h2>
+    <div class="rejilla rejilla-ficha">
+        <div>
+            <div class="dato-etiqueta">Paciente</div>
+            <div class="dato-valor" id="dato-nombre-paciente">{{ paciente.apellidos_nombres }}</div>
+            <div class="dato-etiqueta">DNI</div>
+            <div class="dato-valor" id="dato-dni">{{ paciente.dni }}</div>
+        </div>
+        
+        <div>
+            <div class="dato-etiqueta">Edad</div>
+            <div class="dato-valor" id="dato-edad">{{ paciente.edad }} años</div>
+            <div class="dato-etiqueta">Teléfono</div>
+            <div class="dato-valor" id="dato-telefono">{{ paciente.telefono }}</div>
+        </div>
+        
+        <div>
+            <div class="dato-etiqueta">Antecedentes</div>
+            <div class="dato-valor" id="dato-antecedentes">{{ paciente.antecedentes|default:"Sin antecedentes registrados." }}</div>
+        </div>
+    </div>
+</section>
+
+<!-- UNA TARJETA POR TRATAMIENTO: avance, sesiones realizadas y formulario para registrar la siguiente sesión. -->
+{% for t in tratamientos %}
+<section class="tarjeta" id="tarjeta-tratamiento-{{ t.pk }}">
+    <h2 class="tarjeta-titulo">{{ t.tipo }} <span class="insignia {{ t.clase_insignia }}">{{ t.estado }}</span></h2>
+    {% if t.descripcion %}
+    <div class="dato-etiqueta">{{ t.descripcion }}</div>{% endif %}
+    
+    <div class="dato-etiqueta" id="texto-avance-{{ t.pk }}">Avance: {{ t.sesiones_realizadas }} de {{ t.num_sesiones }} sesiones ({{ t.porcentaje_avance }} %)</div>
+    
+    <div class="barra-progreso" role="progressbar" aria-valuenow="{{ t.porcentaje_avance }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="barra-progreso-relleno" style="width: 50%;"></div>
+    </div>
+    {% if t.sesiones.all %}
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable">
+            <thead>
+                <tr>
+                    <th>N.º</th>
+                    <th>Fecha</th>
+                    <th>Procedimiento / observaciones</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            
+            <tbody>{% for s in t.sesiones.all %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="N.º">{{ s.numero_sesion }}</td>
+                    <td class="celda-fija" data-etiqueta="Fecha">{{ s.fecha_sesion|date:"d/m/Y" }}</td>
+                    <td data-etiqueta="Observaciones">{{ s.observaciones|default:"-" }}</td>
+                    <td data-etiqueta="Estado">
+                        <span class="insignia {% if s.estado == 'Realizada' %}insignia-atendida{% else %}insignia-programada{% endif %}">{{ s.estado }}</span></td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if t.estado == "En curso" %}
+    
+    <form method="post" action="{% url 'registrar_sesion' t.pk %}" novalidate>{% csrf_token %}
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="campo-fecha-sesion-{{ t.pk }}">Fecha de la sesión *</label>
+                <input class="entrada" type="date" id="campo-fecha-sesion-{{ t.pk }}" name="fecha_sesion" value="{{ hoy|date:'Y-m-d' }}">
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-numero-sesion-{{ t.pk }}">N.º de sesión</label>
+                <input class="entrada" type="text" id="campo-numero-sesion-{{ t.pk }}" value="{{ t.sesiones_realizadas|add:1 }}" readonly>
+            </div>
+            
+            <div class="campo ocupa-todo">
+                <label class="etiqueta" for="campo-observaciones-{{ t.pk }}">Observaciones clínicas *</label>
+                <textarea class="area-texto" id="campo-observaciones-{{ t.pk }}" name="observaciones"></textarea>
+            </div>
+        </div>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Registrar sesión
+            </button>
+            
+            <a class="boton" href="{% url 'registrar_pago' %}?tratamiento={{ t.pk }}">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-pagos"></use>
+                </svg>Ir a pagos
+            </a>
+        </div>
+    </form>{% endif %}
+</section>
+{% endfor %}
+
+<!-- NUEVO TRATAMIENTO -->
+<section class="tarjeta" id="tarjeta-nuevo-tratamiento">
+    <h2 class="tarjeta-titulo">Registrar tratamiento</h2>
+    <form method="post" action="{% url 'registrar_tratamiento' paciente.pk %}" novalidate>{% csrf_token %}
+        <div class="rejilla rejilla-formulario">
+            <div class="campo">
+                <label class="etiqueta" for="campo-tipo-tratamiento">Tipo de tratamiento *</label>{{ formulario_tratamiento.tipo }}
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-costo-total">Costo total (S/) *</label>{{ formulario_tratamiento.costo_total }}
+            </div>
+            
+            <div class="campo">
+                <label class="etiqueta" for="campo-num-sesiones">N.º de sesiones *</label>{{ formulario_tratamiento.num_sesiones }}
+            </div>
+            
+            <div class="campo ocupa-todo">
+                <label class="etiqueta" for="campo-descripcion-tratamiento">Descripción</label>{{ formulario_tratamiento.descripcion }}
+            </div>
+        </div>
+        
+        <div class="grupo-botones acciones-formulario">
+            <button class="boton boton-primario" type="submit" id="boton-guardar-tratamiento">
+                <svg class="icono" aria-hidden="true">
+                    <use href="#icono-guardar"></use>
+                </svg>Guardar tratamiento
+            </button>
+        </div>
+    </form>
+</section>
+
+<!-- HISTORIAL DE CITAS (RF-04) -->
+<section class="tarjeta" id="tarjeta-historial-citas">
+    <h2 class="tarjeta-titulo">Historial de citas</h2>
+    {% if citas %}
+    <div class="tabla-contenedor">
+        <table class="tabla tabla-adaptable">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Motivo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for c in citas %}
+                <tr>
+                    <td class="celda-fija" data-etiqueta="Fecha">{{ c.fecha_cita|date:"d/m/Y" }}</td>
+                    <td class="celda-fija" data-etiqueta="Hora">{{ c.hora_cita|time:"H:i" }}</td>
+                    <td data-etiqueta="Motivo">{{ c.motivo|default:"-" }}</td>
+                    <td data-etiqueta="Estado">
+                        <span class="insignia {{ c.clase_insignia }}">{{ c.estado }}</span>
+                    </td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p class="alerta alerta-advertencia">Este paciente aún no tiene citas.</p>{% endif %}
+</section>
+{% endblock %}
